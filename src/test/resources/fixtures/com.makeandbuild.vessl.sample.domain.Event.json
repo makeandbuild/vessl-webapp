@@ -1,0 +1,31 @@
+[
+	{
+		"type": "user.loggedin",
+		"id": "1231231231-12312312-12-3123123"
+	},
+	{
+		"type": "user.loggedout",
+		"id": "1231231231-222",
+		"userId":1
+	},
+	{
+		"type": "user.loggedout",
+		"id": "1231231231-223",
+		"userId":2
+	},
+	{
+		"type": "user.loggedout",
+		"id": "1231231231-224",
+		"userId":2
+	},
+	{
+		"type": "child.user.loggedout",
+		"id": "100-1",
+		"parentId": "1231231231-222"
+	},
+	{
+		"type": "child.user.loggedin",
+		"id": "100-2",
+		"parentId": "1231231231-12312312-12-3123123"
+	}
+]

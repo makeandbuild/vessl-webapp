@@ -1,0 +1,15 @@
+.classpath
+.project
+.settings
+target
+test-output
+/classes
+.DS_Store
+.iml
+dumped-fixtures
+pom.xml.releaseBackup
+release.properties
+doc
+/build
+.gradle
+/bin

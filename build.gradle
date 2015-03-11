@@ -1,0 +1,157 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+import org.gradle.api.tasks.Exec
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.spring.io/milestone" }  // for AspectJ 1.8.0.M1
+}
+
+test {
+    useTestNG() {
+        useDefaultListeners = true
+        includeGroups 'unit'
+    }
+    systemProperty 'environmentName', System.getProperty('environmentName')
+}
+
+task functionTest(type: Test, dependsOn: 'test') {
+    useTestNG() {
+        useDefaultListeners = true
+        includeGroups 'function'
+    }
+    systemProperty 'environmentName', System.getProperty('environmentName')
+}
+
+task integrationTest(type: Test, dependsOn: 'functionTest') {
+    useTestNG() {
+        useDefaultListeners = true
+        includeGroups 'integration'
+    }
+    systemProperty 'environmentName', System.getProperty('environmentName')
+}
+
+task allTests(type: Test) {
+    useTestNG() {
+        useDefaultListeners = true
+    }
+    systemProperty 'environmentName', System.getProperty('environmentName')
+}
+
+dependencies {
+    providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
+    compile 'com.sun.jersey:jersey-server:1.18'
+    compile 'com.sun.jersey:jersey-core:1.18'
+    compile 'com.sun.jersey:jersey-servlet:1.18'
+    compile 'com.sun.jersey.contribs:jersey-multipart:1.18'
+    compile 'org.springframework:spring-core:4.0.0.RELEASE'
+    compile 'org.springframework:spring-context:4.0.0.RELEASE'
+    compile 'org.springframework:spring-web:4.0.0.RELEASE'
+    compile 'org.springframework:spring-test:4.0.0.RELEASE'
+    compile 'org.springframework:spring-tx:4.0.0.RELEASE'
+    compile('com.sun.jersey.contribs:jersey-spring:1.18') {
+        exclude group: 'org.springframework', module: 'spring'
+        exclude group: 'org.springframework', module: 'spring-core'
+        exclude group: 'org.springframework', module: 'spring-web'
+        exclude group: 'org.springframework', module: 'spring-beans'
+        exclude group: 'org.springframework', module: 'spring-context'
+        exclude group: 'org.springframework', module: 'spring-tx'
+        exclude group: 'org.springframework', module: 'spring-test'
+    }
+    compile 'org.json:json:20131018'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.2.0'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.3.1'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.3.1'
+    compile 'com.wordnik:swagger-jersey-jaxrs_2.10:1.3.2'
+    compile 'org.testng:testng:6.8.7'
+    compile 'org.apache.httpcomponents:httpclient:4.2.3'
+    compile 'com.makeandbuild:vessl:1.0.50'
+    compile 'org.apache.axis2:axis2-adb:1.6.1'
+    compile 'org.apache.axis2:axis2-kernel:1.6.1'
+    compile 'org.apache.axis2:axis2-transport-local:1.6.1'
+    compile 'org.apache.axis2:axis2-transport-http:1.6.1'
+    compile 'org.apache.axis2:axis2-xmlbeans:1.6.1'
+    compile 'org.slf4j:slf4j-api:1.7.6'
+    compile 'ch.qos.logback:logback-classic:1.1.1'
+    compile 'ch.qos.logback:logback-core:1.1.1'
+    compile 'javax.annotation:jsr250-api:1.0'
+    compile 'mysql:mysql-connector-java:5.1.28'
+}
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+	jcenter()
+    }
+    dependencies {
+        classpath 'mysql:mysql-connector-java:5.1.28'
+        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:2.2.3'
+        classpath 'net.sf.biweekly:biweekly:0.3.2'
+    }
+}
+
+
+configurations.all {
+    exclude module: 'slf4j-log4j12'
+    exclude module: 'log4j'
+}
+
+env = System.getenv()
+buildNumber = env.BUILD_NUMBER
+if(buildNumber == null) {
+    buildNumber = 0;
+}
+
+def cmd = "git log -n 1 --format='%h'"
+def proc = cmd.execute()
+gitVersionName = proc.text.trim()
+
+version = new Version(version_major: major as int, minor: minor as int, patch: patch as int, buildnumber: buildNumber as int, releaseType:releaseType)
+class Version {
+    int version_major
+    int minor
+    int patch
+    int buildnumber
+    String releaseType
+
+    String toString() {
+        "$version_major.$minor.$patch-$releaseType"
+    }
+}
+
+war {
+    archiveName="$baseName-$version.$extension"
+    manifest {
+        attributes \
+         'Implementation-Title': 'Vessl' , \
+         'Implementation-Version': version , \
+         'Built-By': System.getProperty('user.name'), \
+         'Built-JDK': System.getProperty('java.version'), \
+         'Build-Time': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"), \
+         'Build-Number': buildNumber, \
+         'Git-Hash': gitVersionName
+    }
+}
+
+task fixturesLoad(dependsOn: 'test', type: JavaExec) {
+    main = "com.makeandbuild.vessl.sample.fixture.FixtureUtil"
+    args = [
+        "load"
+    ]
+    classpath = files([configurations.testRuntime, "build/classes/main", "build/classes/test", "build/resources/main", "build/resources/test"])
+    systemProperty 'environmentName', System.getProperty('environmentName')
+}
+task fixturesPurge(dependsOn: 'test', type: JavaExec) {
+    main = "com.makeandbuild.vessl.sample.fixture.FixtureUtil"
+    args = [
+        "purge"
+    ]
+    classpath = files([configurations.testRuntime, "build/classes/main", "build/classes/test", "build/resources/main", "build/resources/test"])
+    systemProperty 'environmentName', System.getProperty('environmentName')
+}
