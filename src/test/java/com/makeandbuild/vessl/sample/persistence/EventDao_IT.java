@@ -16,7 +16,7 @@ import com.makeandbuild.vessl.persistence.*;
 import com.makeandbuild.vessl.sample.domain.Event;
 
 @Test(groups = {"function"})
-@ContextConfiguration(locations={"classpath*:spring.xml"})
+@ContextConfiguration(locations={"classpath*:applicationContext*.xml"})
 public class EventDao_IT extends AbstractTestNGSpringContextTests {
 
     @Autowired 

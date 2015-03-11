@@ -14,9 +14,13 @@ import org.testng.annotations.Test;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.makeandbuild.vessl.sample.domain.*;
+import com.makeandbuild.vessl.persistence.Criteria;
+import com.makeandbuild.vessl.sample.domain.AdminUser;
+import com.makeandbuild.vessl.sample.domain.ApplicantUser;
+import com.makeandbuild.vessl.sample.domain.User;
+import com.makeandbuild.vessl.sample.domain.UserType;
 @Test(groups = {"function"})
-@ContextConfiguration(locations={"classpath*:spring.xml"})
+@ContextConfiguration(locations={"classpath*:applicationContext*.xml"})
 public class UserDao_IT extends AbstractTestNGSpringContextTests {
 
     @Autowired 
@@ -24,7 +28,7 @@ public class UserDao_IT extends AbstractTestNGSpringContextTests {
     
     @AfterMethod
     public void cleanUp() {
-        userDao.deleteAll();
+        userDao.delete(new Criteria("username", "like", "userdaoTest%"));
     }
 
     @Test
@@ -34,7 +38,7 @@ public class UserDao_IT extends AbstractTestNGSpringContextTests {
         user.setLatitude(33.801078);
         user.setLongitude(-84.436287);
         user.setLoginCount(1);
-        user.setUsername("azuercher");
+        user.setUsername("userdaoTest");
         user.setUserType(UserType.simple);
         
         user = userDao.create(user);
@@ -56,7 +60,7 @@ public class UserDao_IT extends AbstractTestNGSpringContextTests {
         user.setLatitude(33.801078);
         user.setLongitude(-84.436287);
         user.setLoginCount(1);
-        user.setUsername("azuercher");
+        user.setUsername("userdaoTest2");
         user.setUserType(UserType.simple);
         user.setApiKey("123123");
         user = (AdminUser) userDao.create(user);
@@ -77,7 +81,7 @@ public class UserDao_IT extends AbstractTestNGSpringContextTests {
         applicantUser.setLatitude(33.801078);
         applicantUser.setLongitude(-84.436287);
         applicantUser.setLoginCount(1);
-        applicantUser.setUsername("azuercher");
+        applicantUser.setUsername("userdaoTest3");
         applicantUser.setUserType(UserType.simple);
         applicantUser.setApplicantId("11221123132");
         applicantUser = (ApplicantUser) userDao.create(applicantUser);
