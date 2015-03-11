@@ -33,9 +33,7 @@ There are a bunch of scripts in the ./scripts folder to make your life a little 
 
 # Integration tests
 
-Check out the tests in [EventResourceTest](./src/test/java/com/makeandbuild/vessl/sample/rest/EventResourceTest.java) and [UserResourceTest](./src/test/java/com/makeandbuild/vessl/sample/rest/UserResourceTest.java) for a http client to the REST resources
-
-you can run them via:
+Check out the tests in [EventResourceTest](./src/test/java/com/makeandbuild/vessl/sample/rest/EventResourceTest.java) and [UserResourceTest](./src/test/java/com/makeandbuild/vessl/sample/rest/UserResourceTest.java) for a http client to the REST resources.  You can run all of them via:
 
     gradle clean integrationTest
 
