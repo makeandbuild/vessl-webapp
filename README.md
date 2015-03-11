@@ -7,16 +7,12 @@ Welcome to the Make & Build Sample webapp for the <a href="https://github.com/ma
 
 Make & Build Vessl Web App is licensed under the Apache Public License, Version 2.0 (see [LICENSE](./LICENSE))
 
+# Setup
 
-# Pre-requisettes
-
-In addition to running on a linux/mac envrionment, we assume that you've installed the following:
+In addition to running on a linux/mac envrionment as a pre-requesette, we assume that you've installed the following:
 * gradle
 * jetty (version 9.1.0)
 * mysql
-
-
-# Setup
 
 Create your database
 
