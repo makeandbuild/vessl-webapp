@@ -28,5 +28,23 @@
 			</list>
 		</property>
 	</bean>
+	<bean class="com.makeandbuild.vessl.fixture.FixtureImpl" id="megaFixture" scope="singleton">
+		<property name="entityLoaders">
+			<list>
+				<bean class="com.makeandbuild.vessl.fixture.IteratedInputStreamEntityLoaderImpl">
+					<property name="inputStream" value="classpath:fixturesgen/com.makeandbuild.vessl.sample.domain.User.json"/>
+					<property name="entityClass" value="com.makeandbuild.vessl.sample.domain.User"/>
+				</bean>
+
+			</list>
+		</property>
+		<property name="entityManagers">
+			<list>
+				<bean class="com.makeandbuild.vessl.fixture.DaoEntityManagerImpl">
+					<constructor-arg ref="userDao"/>
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 </beans>

@@ -155,3 +155,19 @@ task fixturesPurge(dependsOn: 'test', type: JavaExec) {
     classpath = files([configurations.testRuntime, "build/classes/main", "build/classes/test", "build/resources/main", "build/resources/test"])
     systemProperty 'environmentName', System.getProperty('environmentName')
 }
+task megaLoad(dependsOn: 'test', type: JavaExec) {
+    main = "com.makeandbuild.vessl.sample.fixture.FixtureUtil"
+    args = [
+        "megaload"
+    ]
+    classpath = files([configurations.testRuntime, "build/classes/main", "build/classes/test", "build/resources/main", "build/resources/test"])
+    systemProperty 'environmentName', System.getProperty('environmentName')
+}
+task megaPurge(dependsOn: 'test', type: JavaExec) {
+    main = "com.makeandbuild.vessl.sample.fixture.FixtureUtil"
+    args = [
+        "megapurge"
+    ]
+    classpath = files([configurations.testRuntime, "build/classes/main", "build/classes/test", "build/resources/main", "build/resources/test"])
+    systemProperty 'environmentName', System.getProperty('environmentName')
+}
