@@ -30,10 +30,9 @@ There are a bunch of scripts in the ./scripts folder to make your life a little 
 
     ./scrtips/restart.sh
 
-
 # Integration tests
 
-Check out the tests in [EventResourceTest](./src/test/java/com/makeandbuild/vessl/sample/rest/EventResourceTest.java) and [UserResourceTest](./src/test/java/com/makeandbuild/vessl/sample/rest/UserResourceTest.java) for a http client to the REST resources.  You can run all of them via:
+Check out the tests in [EventResourceTest](./src/test/java/com/makeandbuild/vessl/sample/rest/EventResourceTest.java) and [UserResourceTest](./src/test/java/com/makeandbuild/vessl/sample/rest/UserResourceTest.java) for a http client to the REST resources.  Once you've started the web app above, you can run all of the integration tests via:
 
     gradle clean integrationTest
 
