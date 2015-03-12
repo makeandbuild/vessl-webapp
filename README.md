@@ -30,6 +30,17 @@ There are a bunch of scripts in the ./scripts folder to make your life a little 
 
     ./scrtips/restart.sh
 
+optionally, if you want to load the mega fixtures into the database as well, you can do so via:
+
+    gradle megaLoad
+
+and in case if you want to generate the mega fixtures source again:
+
+    cd src/fixturesgen
+    npm install
+    ./load.sh
+
+
 # Integration tests
 
 Check out the tests in [EventResourceTest](./src/test/java/com/makeandbuild/vessl/sample/rest/EventResourceTest.java) and [UserResourceTest](./src/test/java/com/makeandbuild/vessl/sample/rest/UserResourceTest.java) for a http client to the REST resources.  Once you've started the web app above, you can run all of the integration tests via:
