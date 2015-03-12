@@ -36,16 +36,21 @@ Check out the tests in [EventResourceTest](./src/test/java/com/makeandbuild/vess
 
     gradle clean integrationTest
 
-optionally, if you want to load the mega fixtures into the database as well, you can do so via:
+## Mega fxitures
 
-    gradle megaLoad
-
-and in case if you want to generate the mega fixtures source [resources/fixturesgen/com.makeandbuild.vessl.sample.domain.User.json](https://github.com/makeandbuild/vessl-webapp/blob/master/src/test/resources/fixturesgen/com.makeandbuild.vessl.sample.domain.User.json) again:
+The mega fxitures are defined in [resources/fixturesgen/com.makeandbuild.vessl.sample.domain.User.json](https://github.com/makeandbuild/vessl-webapp/blob/master/src/test/resources/fixturesgen/com.makeandbuild.vessl.sample.domain.User.json).  To regenerate them again:
 
     cd src/fixturesgen
     npm install
     ./load.sh
 
+You can load them, which is not part of the restart script via:
+
+    gradle megaLoad
+
+Likewise, to remove them:
+
+    gradle megaPurge
 
 
 
