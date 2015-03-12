@@ -2,7 +2,8 @@
 
 Welcome to the Make & Build sample webapp for the [vessl](https://github.com/makeandbuild/vessl) framework which
 * provides sample REST resources
-* provides mega fixture examples
+* provides sample mega fixtures
+* provides simple JDBC persistence and validation logic
 * demonstrates the build concepts needed to get up and running quickly
 * is gradle based for build mgmt
 
