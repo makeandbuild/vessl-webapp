@@ -34,7 +34,7 @@ optionally, if you want to load the mega fixtures into the database as well, you
 
     gradle megaLoad
 
-and in case if you want to generate the mega fixtures source again:
+and in case if you want to generate the mega fixtures source [resources/fixturesgen/com.makeandbuild.vessl.sample.domain.User.json](https://github.com/makeandbuild/vessl-webapp/blob/master/src/test/resources/fixturesgen/com.makeandbuild.vessl.sample.domain.User.json) again:
 
     cd src/fixturesgen
     npm install
