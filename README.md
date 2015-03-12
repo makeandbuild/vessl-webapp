@@ -28,7 +28,7 @@ Now create the user and event tables
 
 There are a bunch of scripts in the ./scripts folder to make your life a little easier, the following kills jetty, runs the fixtures, builds the war, redeploys it, and tails your jetty logs
 
-    ./scrtips/restart.sh
+    ./scripts/restart.sh
 
 # Integration tests
 
